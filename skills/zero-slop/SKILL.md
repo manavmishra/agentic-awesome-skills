@@ -1,6 +1,12 @@
 ---
 name: zero-slop
+risk: safe
+source: https://github.com/manavmishra/ZeroSlop/tree/f9e236bb55ef9c4fbe9d258e9b1f1a8dc258e8c2/skills/zero-slop
+source_repo: manavmishra/ZeroSlop
+source_type: community
+date_added: "2026-11-01"
 license: MIT
+license_source: https://github.com/manavmishra/ZeroSlop/blob/f9e236bb55ef9c4fbe9d258e9b1f1a8dc258e8c2/LICENSE
 metadata:
   version: "2.12.33"
   author: manavmishra

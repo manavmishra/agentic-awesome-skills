@@ -13,8 +13,9 @@ prints what to run if a newer one exists.
 Two promises this keeps. It sends **only a version query** — never a draft or any
 word from it — so the check does not expose writing. And
 it fails open: no network, a timeout, any error, and it exits 0 with a quiet note,
-because a de-slop run must never break over a missing changelog. Set
-`ZS_NO_UPDATE_CHECK=1` to skip it entirely.
+because a de-slop run must never break over a missing changelog. The check
+is off in this packaged copy. Set `ZS_UPDATE_CHECK=1` to opt in;
+`ZS_NO_UPDATE_CHECK=1` still wins and skips it entirely.
 """
 import argparse
 import json
@@ -50,8 +51,11 @@ def latest_version():
     Sends one GET to the public releases API and reads the tag. No auth, no body,
     nothing about the draft — just 'what is the latest tag'.
     """
-    if os.getenv("ZS_NO_UPDATE_CHECK", "").lower() in {"1", "true", "yes", "on"}:
+    truthy = {"1", "true", "yes", "on"}
+    if os.getenv("ZS_NO_UPDATE_CHECK", "").lower() in truthy:
         return None
+    if os.getenv("ZS_UPDATE_CHECK", "").lower() not in truthy:
+        return None  # packaged copy: no network request unless the user opts in
     try:
         req = urllib.request.Request(RELEASES, headers={"Accept": "application/vnd.github+json",
                                                         "User-Agent": "zero-slop-version-check"})
@@ -63,10 +67,8 @@ def latest_version():
 
 
 def install_hint():
-    """The right update command for how this copy was installed."""
-    if (ROOT / ".git").exists():
-        return "git -C %s pull" % ROOT
-    return "npx skills add manavmishra/ZeroSlop --global   # re-run to update"
+    """Updates come from whatever catalog or installer supplied this copy."""
+    return "Update through the catalog or installer that supplied this copy."
 
 
 def check():
@@ -94,7 +96,7 @@ def main(argv=None):
     elif not args.quiet:
         if not r["checked"]:
             local = r["local"] or "version unknown"
-            print(f"Zero Slop {local} — could not check for updates (offline or rate-limited).")
+            print(f"Zero Slop {local} — update check is off (set ZS_UPDATE_CHECK=1 to opt in).")
         else:
             print(f"Zero Slop {r['local']} is the latest release.")
     return 0
