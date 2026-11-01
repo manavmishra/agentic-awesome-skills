@@ -10,7 +10,7 @@ license_source: https://github.com/manavmishra/ZeroSlop/blob/f9e236bb55ef9c4fbe9
 metadata:
   version: "2.12.33"
   author: manavmishra
-description: Edit drafts into natural prose, inspect AI-sounding patterns, or review how a specified audience might respond passage by passage. Zero Slop runs inside the user's existing AI assistant with local tools that protect source details. Use for humanizing or de-slopping writing, polishing outward-facing prose, social drafts, final editorial checks, or an explicit simulated reader review. Preserve facts, voice and format; reader simulations are hypotheses, not human feedback.
+description: Edit drafts into natural prose, inspect AI-sounding patterns, or run an opt-in simulated reader review. Runs inside the user's AI assistant with local checks that protect names, numbers, quotes and links. Preserves facts, voice and format.
 ---
 
 # Zero Slop
@@ -36,6 +36,14 @@ relentless even polish. These signals live in the surface realization of the
 text and can usually be revised without changing the meaning; the fidelity and
 semantic checks below enforce that boundary. `references/evidence.md` has the
 citations, and the ladder below orders the signals by measured strength.
+
+## When to Use
+
+- The user wants a draft de-slopped or humanized, or asks whether it reads like AI.
+- Outward-facing prose, social drafts or a final editorial check needs a pass that keeps the facts, voice and format.
+- The user explicitly asks how a named audience might respond, passage by passage. Those reactions are hypotheses, not human feedback.
+
+Do not use it to defeat an AI-disclosure requirement or to imitate a named person.
 
 ## Hard rules (non-negotiable)
 
